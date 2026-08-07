@@ -9,10 +9,11 @@ if (!cached) {
 async function connectDB() {
   if (cached.conn) return cached.conn;
 
-  const uri = process.env.MONGODB_URI;
+  let uri = process.env.MONGODB_URI;
   if (!uri) {
     throw new Error('ไม่พบ MONGODB_URI กรุณาตั้งค่า environment variable');
   }
+  uri = uri.trim().replace(/^["']|["']$/g, '');
 
   if (!cached.promise) {
     cached.promise = mongoose
